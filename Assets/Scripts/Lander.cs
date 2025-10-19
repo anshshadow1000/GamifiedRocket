@@ -1,11 +1,15 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Lander : MonoBehaviour
+public class Lander : MonoBehaviour 
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     // Update is called once per frame
-    
+    public event EventHandler OnUpForce;
+    public event EventHandler OnRightForce;
+    public event EventHandler OnLeftForce;
+    public event EventHandler OnBeforeForce;
     private Rigidbody2D landerRigidbody2D;
 
 
@@ -17,20 +21,24 @@ public class Lander : MonoBehaviour
 
     private void FixedUpdate()
     {
+        OnBeforeForce?.Invoke(this, EventArgs.Empty);
         if (Keyboard.current.upArrowKey.isPressed)
         {
             float force = 700f;
             landerRigidbody2D.AddForce(force * transform.up * Time.deltaTime);
+            OnUpForce?.Invoke(this, EventArgs.Empty);
         }
         if (Keyboard.current.leftArrowKey.isPressed)
         {
             float turnspeed = +100f;
             landerRigidbody2D.AddTorque(turnspeed * Time.deltaTime);
+            OnLeftForce?.Invoke(this, EventArgs.Empty);
         }
         if (Keyboard.current.rightArrowKey.isPressed)
         {
             float turnspeed = -100f;
             landerRigidbody2D.AddTorque(turnspeed * Time.deltaTime);
+            OnRightForce?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -65,6 +73,10 @@ public class Lander : MonoBehaviour
 
         Debug.Log("landingAngleScore: " + landingAngleScore);
         Debug.Log("landingSpeedScore: " + landingSpeedScore);
+
+        int score = Mathf.RoundToInt((landingAngleScore + landingSpeedScore) * landingpad.GetScoreMultiplier()) ;
+
+        Debug.Log("score: " + score);
     }
 }
 
