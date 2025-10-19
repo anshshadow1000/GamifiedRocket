@@ -6,15 +6,27 @@ public class Lander : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     // Update is called once per frame
+    public static Lander Instance { get; private set; }
+
     public event EventHandler OnUpForce;
     public event EventHandler OnRightForce;
     public event EventHandler OnLeftForce;
     public event EventHandler OnBeforeForce;
+    public event EventHandler OnCoinPickup;
+    public event EventHandler<OnLandedEventArgs> OnLanded;
+    public class OnLandedEventArgs : EventArgs
+    {
+        public int score;
+    }
+
     private Rigidbody2D landerRigidbody2D;
+    private float fuelAmount = 10f;
 
 
 
     private void Awake() {
+        Instance = this;
+
         landerRigidbody2D = GetComponent<Rigidbody2D>();
     }
 
@@ -22,11 +34,21 @@ public class Lander : MonoBehaviour
     private void FixedUpdate()
     {
         OnBeforeForce?.Invoke(this, EventArgs.Empty);
+        if (fuelAmount <= 0f)
+        {
+            return;
+        }
+        if (Keyboard.current.upArrowKey.isPressed ||
+            Keyboard.current.leftArrowKey.isPressed ||
+            Keyboard.current.rightArrowKey.isPressed) 
+        {
+            ConsumeFuel();
+        }
         if (Keyboard.current.upArrowKey.isPressed)
         {
             float force = 700f;
             landerRigidbody2D.AddForce(force * transform.up * Time.deltaTime);
-            OnUpForce?.Invoke(this, EventArgs.Empty);
+           OnUpForce?.Invoke(this, EventArgs.Empty);
         }
         if (Keyboard.current.leftArrowKey.isPressed)
         {
@@ -77,6 +99,32 @@ public class Lander : MonoBehaviour
         int score = Mathf.RoundToInt((landingAngleScore + landingSpeedScore) * landingpad.GetScoreMultiplier()) ;
 
         Debug.Log("score: " + score);
+        OnLanded?.Invoke(this, new OnLandedEventArgs { 
+            score = score 
+        });
+    }
+
+   
+       private void OnTriggerEnter2D(Collider2D collider2D)
+    {
+        if (collider2D.gameObject.TryGetComponent(out FuelPickup fuelPickup))
+        {
+            float addFuelAmount = 10f;
+            fuelAmount += addFuelAmount;
+            fuelPickup.DestroySelf();
+        }
+
+        if (collider2D.gameObject.TryGetComponent(out CoinPickup coinPickup))
+        {
+            OnCoinPickup?.Invoke(this, EventArgs.Empty);
+            coinPickup.DestroySelf();
+        }
+    }
+
+private void ConsumeFuel()
+    {
+        float fuelConsumptionAmount = 1f;
+        fuelAmount -= fuelConsumptionAmount * Time.deltaTime;
     }
 }
 
