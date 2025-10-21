@@ -126,5 +126,20 @@ private void ConsumeFuel()
         float fuelConsumptionAmount = 1f;
         fuelAmount -= fuelConsumptionAmount * Time.deltaTime;
     }
+
+    public float GetFuelAmount()
+    {
+        return fuelAmount;
+    }
+
+    public float GetSpeedX()
+    {
+        return landerRigidbody2D.linearVelocity.x;
+    }
+
+    public float GetSpeedY()
+    {
+        return landerRigidbody2D.linearVelocity.x;
+    }
 }
 
