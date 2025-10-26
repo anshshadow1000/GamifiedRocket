@@ -42,6 +42,7 @@ public class Lander : MonoBehaviour
     {
         WaitingToStart,
         Normal,
+        GameOver
     }
 
     private Rigidbody2D landerRigidbody2D;
@@ -72,8 +73,7 @@ public class Lander : MonoBehaviour
                    Keyboard.current.rightArrowKey.isPressed)
                 {
                     landerRigidbody2D.gravityScale = GRAVITY_NORMAL;
-                    state = State.Normal;
-                    OnStateChanged?.Invoke(this, new OnStateChangedEventArgs { state = state });
+                    SetState(State.Normal);
                 }
                 break;
             case State.Normal:
@@ -106,6 +106,8 @@ public class Lander : MonoBehaviour
                     OnRightForce?.Invoke(this, EventArgs.Empty);
                 }
                 break;
+                case State.GameOver:
+                break;
         }
     }
 
@@ -121,6 +123,7 @@ public class Lander : MonoBehaviour
                 scoreMultiplier = 0,
                 score = 0,
             });
+            SetState(State.GameOver);
             return;
         }
             float softlandingvelocitymagnitude = 4f;
@@ -136,6 +139,7 @@ public class Lander : MonoBehaviour
                 scoreMultiplier = 0,
                 score = 0,
             });
+            SetState(State.GameOver);
             return;
         }
 
@@ -152,6 +156,7 @@ public class Lander : MonoBehaviour
                 scoreMultiplier = 0,
                 score = 0,
             });
+            SetState(State.GameOver);
             return;
         }
         Debug.Log("Successful landing!");
@@ -175,6 +180,7 @@ public class Lander : MonoBehaviour
             scoreMultiplier = landingpad.GetScoreMultiplier(),
             score = score,
         });
+        SetState(State.GameOver);
     }
 
    
@@ -198,7 +204,12 @@ public class Lander : MonoBehaviour
         }
     }
 
-private void ConsumeFuel()
+    private void SetState(State state) { 
+        this.state = state;
+        OnStateChanged?.Invoke(this, new OnStateChangedEventArgs { state = state });
+    }
+
+    private void ConsumeFuel()
     {
         float fuelConsumptionAmount = 1f;
         fuelAmount -= fuelConsumptionAmount * Time.deltaTime;
