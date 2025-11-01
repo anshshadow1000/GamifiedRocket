@@ -5,6 +5,7 @@ public class LanderVisuals : MonoBehaviour
     [SerializeField] private ParticleSystem leftThrusterParticalSystem;
     [SerializeField] private ParticleSystem middleThrusterParticalSystem;
     [SerializeField] private ParticleSystem rightThrusterParticalSystem;
+    [SerializeField] private GameObject landerExplosionVfx;
 
     private Lander lander;
 
@@ -21,6 +22,26 @@ public class LanderVisuals : MonoBehaviour
         SetEnabledThrusterParticleSystem(middleThrusterParticalSystem, false);
         SetEnabledThrusterParticleSystem(leftThrusterParticalSystem, false);
     }
+
+    private void Start()
+    {
+        lander.OnLanded += Lander_OnLanded;
+    }
+
+    private void Lander_OnLanded(object sender, Lander.OnLandedEventArgs e)
+    {
+        switch (e.landingType)
+        {
+            case Lander.LandingType.TooFastLanding:
+            case Lander.LandingType.TooSteepAngle:
+            case Lander.LandingType.WrongLandingArea:
+                Instantiate(landerExplosionVfx, transform.position, Quaternion.identity);
+                gameObject.SetActive(false);
+                break;
+
+        }
+    }
+
 
     private void Lander_OnBeforeForce(object sender, System.EventArgs e)
     {
