@@ -1804,8 +1804,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -17.871506, y: 0}
-  m_SizeDelta: {x: -35.7421, y: 0}
+  m_AnchoredPosition: {x: -29.7935, y: 33.977783}
+  m_SizeDelta: {x: -59.5862, y: -118.0282}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &803557882
 MonoBehaviour:
@@ -1876,6 +1876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   levelNumber: 1
   gameLevelList:
+  - {fileID: -4953595281053394454, guid: 46137029081592649a3f5f1ec82b64be, type: 3}
   - {fileID: -4953595281053394454, guid: 995b23d612c78f140855ae3ddb8370b8, type: 3}
 --- !u!4 &814282670
 Transform:
@@ -2372,6 +2373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LandedUI
   titleTextMesh: {fileID: 1846288877}
   statsTextMesh: {fileID: 557588774}
+  nextButtonTextMesh: {fileID: 837811354}
   nextButton: {fileID: 346986788}
 --- !u!1001 &1270541340
 PrefabInstance:
@@ -3080,7 +3082,7 @@ Transform:
   m_GameObject: {fileID: 2075149931}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1863.956, y: -283.3, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
