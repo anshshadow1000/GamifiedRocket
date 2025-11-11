@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using Unity.Cinemachine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     private static int levelNumber = 1;
+
+    public event EventHandler OnGamePaused;
+    public event EventHandler OnGameUnpaused;
 
     [SerializeField] private List<GameLevel> gameLevelList;
     [SerializeField] private CinemachineCamera cinemachineCamera;
@@ -31,7 +35,14 @@ public class GameManager : MonoBehaviour
         Lander.Instance.OnLanded += Lander_OnLanded;
         Lander.Instance.OnStateChanged += Lander_OnStateChanged;
 
+
+        GameInput.Instance.OnMenuButtonPressed += GameInput_OnMenuButtonPressed;
         LoadCurrentLevel();
+    }
+
+    private void GameInput_OnMenuButtonPressed(object sender, System.EventArgs e)
+    {
+        PauseUnpauseGame();
     }
 
     private void Lander_OnStateChanged(object sender, Lander.OnStateChangedEventArgs e)
@@ -107,6 +118,30 @@ public class GameManager : MonoBehaviour
     public int GetLevelNumber()
     {
         return levelNumber;
+    }
+
+    public void PauseUnpauseGame()
+    {
+        if (Time.timeScale == 1f)
+        {
+            PauseGame();
+        }
+        else
+        {
+            UnpauseGame();
+        }
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+        OnGamePaused?.Invoke(this, System.EventArgs.Empty);
+    }
+
+    public void UnpauseGame()
+    {
+        Time.timeScale = 1f;
+        OnGameUnpaused?.Invoke(this, System.EventArgs.Empty);
     }
 }
 
