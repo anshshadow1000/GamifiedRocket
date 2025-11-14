@@ -11,6 +11,7 @@ public class MainMenuUI : MonoBehaviour
     {
         playButton.onClick.AddListener(() =>
         {
+            GameManager.ResetStaticData();
             SceneLoader.LoadScene(SceneLoader.Scene.GameScene);
         });
 
