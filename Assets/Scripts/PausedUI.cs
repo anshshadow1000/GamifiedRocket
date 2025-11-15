@@ -38,6 +38,8 @@ public class PausedUI : MonoBehaviour
 
     private void Show()
     {
+        resumeButton.Select();
+
         gameObject.SetActive(true);
     }
 

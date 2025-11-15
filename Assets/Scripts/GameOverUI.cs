@@ -18,16 +18,9 @@ public class GameOverUI : MonoBehaviour
 
     private void Start()
     {
-        if (scoreTextMesh == null)
-            Debug.LogError("scoreTextMesh is not assigned!");
-
-        if (GameManager.Instance == null)
-            Debug.LogError("GameManager.Instance is null!");
-
-        if (scoreTextMesh != null && GameManager.Instance != null)
-            scoreTextMesh.text = "FINAL SCORE: " + GameManager.Instance.GetTotalScore().ToString();
-
     scoreTextMesh.text = "FINAL SCORE: " + GameManager.Instance.GetTotalScore().ToString();
+
+    mainMenuButton.Select();
     }
 
 }
