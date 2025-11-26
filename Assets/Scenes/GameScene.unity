@@ -1116,8 +1116,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.3242188, y: -32.76123}
-  m_SizeDelta: {x: -1381.4, y: -800.2644}
+  m_AnchoredPosition: {x: -1.7645874, y: -8.97937}
+  m_SizeDelta: {x: -1350.5123, y: -847.8282}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &327179376
 MonoBehaviour:
@@ -3603,7 +3603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5686275}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.16470589}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
